@@ -31,7 +31,7 @@ public class main extends Canvas{
 	 */
 	static int ballRadius = 10;
 	static int paddleheight = 200;
-	static int paddlewidth = 30;
+	static int paddlewidth = 20;
 	static int aiPaddleY = 400;
 	static int frameRate = 1000/90;
 	static ball Ball = new ball();
@@ -132,6 +132,11 @@ public class main extends Canvas{
 					&& Ball.ballX<=paddlewidth) {
 				Ball.velX=-Ball.velX;
 				player.score++;
+				if(Ball.ballY<=player.posY+10) {
+					Ball.velY = -10;
+				} else if(Ball.ballY>=player.posY+paddleheight-10) {
+					Ball.velY = 10;
+				}
 			} else if(Ball.ballX<=paddlewidth) {
 				dead = true;
 			}
@@ -140,6 +145,11 @@ public class main extends Canvas{
 					&& Ball.ballY<=player.posY+paddleheight
 					&& Ball.ballX>=800-paddlewidth) {
 				Ball.velX=-Ball.velX;
+				if(Ball.velY>8) {
+					Ball.velY = 8;
+				} else if(Ball.velY<-8) {
+					Ball.velY = -8;
+				}
 			}
 
 			//renders the ball and what not
@@ -157,7 +167,7 @@ public class main extends Canvas{
 	        g.fillRect(395, 0, 10, 800);
 	        g.fillRect(0, player.posY, paddlewidth, paddleheight);
 	        g.fillRect(800-paddlewidth-16, Ball.ballY, paddlewidth, paddleheight);
-	        g.fillOval(Ball.ballX, Ball.ballY, 50, 50);
+	        g.fillOval(Ball.ballX, Ball.ballY, ballRadius*2, ballRadius*2);
 	        g.drawString("Your score is: "+String.valueOf(player.score), 500, 100);
 	        g.setColor(Color.WHITE);
 		} else {

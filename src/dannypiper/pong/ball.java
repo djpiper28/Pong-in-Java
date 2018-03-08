@@ -36,7 +36,7 @@ public class ball {
 			this.ballY += this.velY;
 		}
 		//Ball bounces next to the edge
-		if(this.ballX<=25 || this.ballX>=775) {
+		if(this.ballX<=20 || this.ballX>=780) {
 			this.velX = -this.velX;
 			if(this.velX>0 && this.velX<8) {
 				this.velX+=randint(2);
@@ -46,7 +46,7 @@ public class ball {
 				this.velX+=-randint(2);
 			}
 		}
-		if(this.ballY<=25 || this.ballY>=775) {
+		if(this.ballY<=20 || this.ballY>=780) {
 			this.velY = -this.velY;
 			if(this.velY>0 && this.velY<8) {
 				this.velY+=randint(2);
@@ -58,16 +58,16 @@ public class ball {
 		}
 		
 		if(this.ballY>800) {
-			this.ballY = 774;
+			this.ballY = 779;
 		}
 		if(this.ballX>800) {
-			this.ballX = 774;
+			this.ballX = 779;
 		}
 		if(this.ballY<0) {
-			this.ballY = 26;
+			this.ballY = 21;
 		}
 		if(this.ballX<0) {
-			this.ballX = 26;
+			this.ballX = 21;
 		}
 	}
 }
