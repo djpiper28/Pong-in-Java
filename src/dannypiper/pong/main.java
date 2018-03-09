@@ -20,7 +20,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import dannypiper.pong.Player;
 /**
- * @author Dannyy
+ * @author Danny
  *
  */
 public class main extends Canvas{
@@ -39,6 +39,7 @@ public class main extends Canvas{
 	static JFrame frame = new JFrame();
 	static controlType CType = controlType.MOUSE;
 	static Boolean dead = false;
+	static Boolean ballThing = true;
 	
 	public static void main(String[] args) throws InterruptedException {
 		//init
@@ -115,7 +116,7 @@ public class main extends Canvas{
 		}
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add("Center", canvas);
-
+		canvas.createBufferStrategy(2);
 		//render the frame
 		while(true) {
 			frame.setBackground(Color.BLACK);
@@ -131,7 +132,23 @@ public class main extends Canvas{
 					&& Ball.ballY<=player.posY+paddleheight
 					&& Ball.ballX<=paddlewidth) {
 				Ball.velX=-Ball.velX;
-				player.score++;
+				if(ballThing) {
+					player.score++;
+				}
+				ballThing = false;
+				if(Ball.ballY<=player.posY+10) {
+					Ball.velY = -10;
+				} else if(Ball.ballY>=player.posY+paddleheight-10) {
+					Ball.velY = 10;
+				}
+			}  else if(Ball.ballY - Ball.ballY - Ball.velY>=player.posY 
+					&& Ball.ballY - Ball.ballY - Ball.velY<=player.posY+paddleheight
+					&& Ball.ballX<=paddlewidth) {
+				Ball.velX=-Ball.velX;
+				if(ballThing) {
+					player.score++;
+				}
+				ballThing = false;
 				if(Ball.ballY<=player.posY+10) {
 					Ball.velY = -10;
 				} else if(Ball.ballY>=player.posY+paddleheight-10) {
@@ -139,6 +156,10 @@ public class main extends Canvas{
 				}
 			} else if(Ball.ballX<=paddlewidth) {
 				dead = true;
+			}
+			if(Ball.ballX>50
+					&& Ball.velX>0) {
+				ballThing = true;
 			}
 			//Bounces off AI paddle
 			if(Ball.ballY>=player.posY 
@@ -166,7 +187,7 @@ public class main extends Canvas{
 			g.setColor(Color.WHITE);
 	        g.fillRect(395, 0, 10, 800);
 	        g.fillRect(0, player.posY, paddlewidth, paddleheight);
-	        g.fillRect(800-paddlewidth-16, Ball.ballY, paddlewidth, paddleheight);
+	        g.fillRect(800-paddlewidth, Ball.ballY, paddlewidth, paddleheight);
 	        g.fillOval(Ball.ballX, Ball.ballY, ballRadius*2, ballRadius*2);
 	        g.drawString("Your score is: "+String.valueOf(player.score), 500, 100);
 	        g.setColor(Color.WHITE);
